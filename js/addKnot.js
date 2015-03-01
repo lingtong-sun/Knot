@@ -4,7 +4,7 @@ $(document).ready(function() {
     function generateOneBlock(width, offset, isGreen) {
         var color = "#27ae60";
         if(!isGreen) color = "#2980b9";
-        var returnStr = "<div ";
+        var returnStr = "<div class='colorBlocks' ";
         returnStr += " style = 'position:absolute; height:100%; top: 0; background:" + color + "; width:" + width + "%; left:" + offset + "%'";
         returnStr += "></div>";
         return returnStr;
@@ -18,6 +18,7 @@ $(document).ready(function() {
         return diffDays;
     }
     function addBarsToKnot(knot) {
+        $(knot).find('.colorBlocks').remove();
         var percentages = $(knot).data("knots");
         var offset = 0;
         for(var i = 0; i < percentages.length; i++) {
@@ -28,10 +29,13 @@ $(document).ready(function() {
         }
     }
 	function constructKnotMember(partner, title, goal, enddate) {
-		var returnStr = "<article class='knotMember' data-knots='[20,10]'>";
+		var returnStr = "<article class='knotMember' data-knots='[]' data-goal='"+ goal +"'>";
 		returnStr += "<h3>" + title + "<BR><small>with " + partner + "</small></h3>";
         returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
 		returnStr += "<section class='memberDetail'>";
+        returnStr += "<input type='range' class='logSlider' min=0/>";
+        returnStr += "<div class='rangeVal'>0</div>";
+        returnStr += " <button class='logConfirm'>ok</button>"
         returnStr += "</section>";
         // returnStr += "<div class='test'></div>";
         // returnStr += "<div class='test2'></div>";
@@ -39,6 +43,20 @@ $(document).ready(function() {
         returnStr += "</article>";
 		return returnStr;
 	}
+    function updateSlider(knot) {
+        var percentages = $(knot).data("knots");
+        var sum = 0;
+        for(var i = 0; i < percentages.length; i++) {
+            sum += percentages[i];
+        }
+        var goal = $(knot).data("goal");
+        var max = Math.floor(goal - (goal * (sum/100)));
+        $(knot).find('.logSlider').attr('max', max);
+    }
+    $("#knots").on("change", ".logSlider", function() {
+        var newVal = $(this).val();
+        $(this).closest(".knotMember").find('.rangeVal').html(newVal);
+    });
 	function getKnotString() {
 		var partner = $("#partnerIn").val();
 		var title = $("#titleIn").val();
@@ -51,6 +69,7 @@ $(document).ready(function() {
 		$("#knots").html(currentKnots);
 	    $(".knotMember").each(function() {
             addBarsToKnot(this);
+            updateSlider(this);
         });
     }
     $("#addKnotPane").on("click", ".addKnot",function(e){
@@ -71,6 +90,18 @@ $(document).ready(function() {
     	var allKnots = sessionStorage.getItem("knots");
     	sessionStorage.setItem("knots", newKnotString + allKnots);
     	updateContentPane();
+    });
+    $("#knots").on("click", ".logConfirm", function(e) {
+        var knot = $(this).closest(".knotMember");
+        var goal = knot.data('goal');
+        var newVal = knot.find(".rangeVal").html();
+        var newAsPercent = Math.floor(newVal/goal * 100);
+
+        var oldArr = knot.data('knots');
+        oldArr.push(newAsPercent);
+        $(knot).attr("data-knots", oldArr);
+        updateSlider(knot);
+        addBarsToKnot(knot);
     });
     $("#knots").on("click", ".knotMember", function(e) {
         e.preventDefault();

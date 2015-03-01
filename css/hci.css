@@ -66,6 +66,8 @@ button.addKnot {
 }
 .memberDetail {
 	display: none;
+	z-index: 3;
+	position: relative;
 }
 .days {
 	position: absolute;
@@ -75,6 +77,10 @@ button.addKnot {
 	color: white;
 	font-style: italic;
 	font-weight: bold;
+}
+.rangeVal {
+	color: white;
+	display: inline-block;
 }
 .test {
 	background: #2980b9;
