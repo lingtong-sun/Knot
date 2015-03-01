@@ -57,7 +57,6 @@ button.addKnot {
 	color: white;
 }
 .knotMember:hover {
-	background: rgba(144,144,144,0.4);
 	opacity: 1.0;
 
 }
@@ -68,6 +67,11 @@ button.addKnot {
 	display: none;
 	z-index: 3;
 	position: relative;
+}
+.done {
+	content: "Done";
+	text-align: center;
+	font-size: 2em;
 }
 .days {
 	position: absolute;
@@ -105,4 +109,34 @@ button.addKnot {
 	height: 100%;
 	top:0;
 	left:40%;
+}
+#notifs {
+	font-size: 2em;
+	color: white;
+	position: absolute;
+	right: 15px;
+	top: 10px;
+	padding: 3px 12px;
+	border: 3px solid white;
+	cursor: pointer;
+	background: #e74c3c;
+}
+#notifs:hover {
+	background: #c0392b;
+}
+#notifCenter {
+	display: none;
+}
+ul.notifications {
+	list-style-type: none;
+	padding-left: 0;
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+li.notificationSing {
+	padding: 10px 0;
+	background: white;
+}
+li.notificationSing:hover {
+	background: #ecf0f1;
 }
