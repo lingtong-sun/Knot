@@ -75,8 +75,8 @@ button.addKnot {
 }
 .days {
 	position: absolute;
-	top: 28%;
-	right: 5%;
+	bottom: 10%;
+	right: 25%;
 	z-index: 5;
 	color: white;
 	font-style: italic;
@@ -139,4 +139,18 @@ li.notificationSing {
 }
 li.notificationSing:hover {
 	background: #ecf0f1;
+}
+.encourageIcon {
+	right: 7%;
+	top: 7%;
+	position: absolute;
+	color: white;
+	border: solid 3px white;
+	padding: 2px 6px;
+	border-radius: 5px;
+	z-index: 200;
+	background: #aaa;
+}
+.fa-child:hover {
+	color: #27ae60;
 }
