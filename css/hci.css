@@ -1,6 +1,9 @@
 h1, .h1, h2, .h2, h3, .h3 {
 	margin: 0;
 }
+#logo {
+	font-family: 'Satisfy', cursive;
+}
 body {
 	background: #ecf0f1;
 }
@@ -11,8 +14,11 @@ header h1 {
 	padding: 20px 0;
 }
 
+#addForm {
+	display: none;
+}
+
 #addKnotPane {
-	background: rgba(144,144,144,0.3);
 	position: relative;
 	padding: 15px 0;
 	margin-bottom: 20px;
@@ -46,6 +52,7 @@ button.addKnot {
 	background: #7f8c8d;
     margin-bottom: 10px;
     position: relative;
+    overflow: hidden;
 }
 .knotMember h3 {
 	color: white;
@@ -84,7 +91,7 @@ button.addKnot {
 }
 .rangeVal {
 	color: white;
-	display: inline-block;
+	display: none;
 }
 .test {
 	background: #2980b9;

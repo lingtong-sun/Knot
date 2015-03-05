@@ -9,6 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/hci.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -20,7 +22,7 @@
   <body>
     <section id="container">
       <header>
-        <h1 class="text-center">Knot</h1>
+        <h1 id="logo" class="text-center">Knot</h1>
         <span id="notifs">3</span>
         <div id="notifCenter">
           <ul class="notifications">
@@ -37,10 +39,33 @@
         </div>
       </header>
       <section id="contentPane">
-        <section class="hoverButton" id="addKnotPane">
-          <a href=""><button class="addKnot">
-            <i class="fa fa-plus-circle"></i> Add Knot
-          </button></a>
+        <section class="hoverButton grey lighten-2" id="addKnotPane">
+          <section class='row' id='addForm'>
+            <h2>Add New Knot</h2><a id='hideAddPane' href='#'>hide</a>
+            <form class='col s12'>
+              <div class='row'> 
+                <div class='input-field col s6'> 
+                  <input id='partnerIn' type='text'></input><label for='partnerIn'>Partner</label>
+                </div>
+                <div class='input-field col s6'> 
+                  <input id='titleIn' type='text'></input><label for='titleIn'>Activity</label>
+                </div>
+              </div> 
+              <div class='input-field col s12'>
+                <input id='goalIn' type='text'></input><label for='goalIn'>Target Quantity</label> 
+              </div>
+              <div class='input-field col s12'>
+                <input id='enddateIn' type='date' class='datepicker'></input><label for='enddateIn'>End Date</label>
+              </div> 
+              <a id="addBtn" class="waves-effect waves-light btn">Add</a>
+            </form>
+          </section>
+          <a href="">
+            <button class="addKnot">
+              <i class="fa fa-plus-circle"></i> Add Knot
+            </button>
+
+          </a>
         </section>
         
         <section id="knots">
@@ -56,6 +81,7 @@
     <script src="http://code.jquery.com/jquery.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/addKnot.js"></script>
   </body>
 </html>
