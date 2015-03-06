@@ -16,6 +16,15 @@ $(document).ready(function() {
         returnStr += "></div>";
         return returnStr;
     }
+
+    function generateGrayBlock(width, offset){
+        var color = "#95a5a6"
+        var ret = "<div class='grayBlock' ";
+        ret += " style= 'position: absolute; height: 100%; top: 0; background: " + color + "; width:" + width + "%; left:" + offset + "%'";
+        ret += "></div>";
+        return ret;
+    }
+
     function daysLeft(enddate) {
         var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
         var firstDate = new Date();
@@ -36,7 +45,7 @@ $(document).ready(function() {
         }
     }
 	function constructKnotMember(partner, title, goal, enddate) {
-		var returnStr = "<article class='knotMember' data-knots='[]' data-goal='"+ goal +"'>";
+		var returnStr = "<article class='knotMember' data-blue='10', data-green='20' data-goal='"+ goal +"'>";
 		returnStr += "<h3>" + title + "<BR><small>with " + partner + "</small></h3>";
         returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
 		//returnStr += "<div class='encourage'><span class='fa fa-child fa-3x encourageIcon'></span></div>"
@@ -51,12 +60,21 @@ $(document).ready(function() {
         returnStr += "</article>";
 		return returnStr;
 	}
+
+    function createMiddleBlock(knot){
+        $(knot).find('.middleBlocks').remove();
+        var bluePercentage = $(knot).data("blue");
+        var greenPercentage = $(knot).data("green");
+        grayBlock = generateGrayBlock(bluePercentage, 100 - (bluePercentage + greenPercentage));
+        console.log(knot);
+        $(knot).children(".grayBlock").replaceWith(grayBlock);
+
+
+    }
+
     function updateSlider(knot) {
-        var percentages = $(knot).data("knots");
+        var percentages = $(knot).data("blue") + $(knot).data("green");
         var sum = 0;
-        for(var i = 0; i < percentages.length; i++) {
-            sum += percentages[i];
-        }
         var goal = $(knot).data("goal");
         var max = Math.floor(goal - (goal * (sum/100)));
         $(knot).find('.logSlider').attr('max', max);
@@ -77,7 +95,8 @@ $(document).ready(function() {
 		var currentKnots = localStorage.getItem("knots");
 		$("#knots").html(currentKnots);
 	    $(".knotMember").each(function() {
-            addBarsToKnot(this);
+            // addBarsToKnot(this);
+            createMiddleBlock(this);
             updateSlider(this);
             $(this).find(".memberDetail").slideUp();
         });
@@ -116,11 +135,15 @@ $(document).ready(function() {
         var newVal = knot.find(".rangeVal").html();
         var newAsPercent = Math.floor(newVal/goal * 100);
 
-        var oldArr = knot.data('knots');
-        oldArr.push(newAsPercent);
-        $(knot).attr("data-knots", "[" + oldArr + "]");
+        var bluePercentage = knot.data('blue');
+        var greenPercentage = knot.data('green');
+        $(knot).attr("data-blue", ""+(bluePercentage+newAsPercent));
+        setTimeout(function(){
+            $(knot).attr("data-green", ""+(greenPercentage + Math.floor(Math.random() * 10) ) );
+        }, 5000);
         updateSlider(knot);
-        addBarsToKnot(knot);
+        // addBarsToKnot(knot);
+        createMiddleBlock(knot);
         var curAllKnots = $("#knots").html();
         console.log(curAllKnots);
         localStorage.setItem("knots", curAllKnots);
