@@ -1,12 +1,19 @@
 
 $(document).ready(function() {
+
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15 // Creates a dropdown of 15 years to control year
     });
+    $('.modal-trigger').leanModal();
     //var seedData = '<article class="knotMember" data-knots="[13,20,6]" data-goal="15"><h3>Read for fun<br><small>with Mike</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="9"><div class="rangeVal">1</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:13%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:20%; left:13%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:6%; left:33%"></div></article><article class="knotMember" data-knots="[20,40]" data-goal="5"><h3>Swim<br><small>with Wending</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="2"><div class="rangeVal">2</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:40%; left:20%"></div></article><article class="knotMember" data-knots="[15,30,15,5,20]" data-goal="20"><h3>Morning Run<br><small>with John</small></h3><span class="days">33 days left</span><section class="memberDetail" style="display: block;"><input type="range" class="logSlider" min="0/" max="3"><div class="rangeVal">4</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:30%; left:15%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:45%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:5%; left:60%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:65%"></div></article>';
 	var orig = localStorage.getItem("knots");
     //if(!orig) localStorage.setItem("knots", seedData);
+
+ //    var seedData= '<article class="knotMember" data-knots="[13,20,6]" data-goal="15"><h3>Read for fun<br><small>with Mike</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="9"><div class="rangeVal">1</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:13%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:20%; left:13%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:6%; left:33%"></div></article><article class="knotMember" data-knots="[20,40]" data-goal="5"><h3>Swim<br><small>with Wending</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="2"><div class="rangeVal">2</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:40%; left:20%"></div></article><article class="knotMember" data-knots="[15,30,15,5,20]" data-goal="20"><h3>Morning Run<br><small>with John</small></h3><span class="days">33 days left</span><section class="memberDetail" style="display: block;"><input type="range" class="logSlider" min="0/" max="3"><div class="rangeVal">4</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:30%; left:15%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:45%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:5%; left:60%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:65%"></div></article>';
+	// var orig = sessionStorage.getItem("knots");
+ //    if(!orig) sessionStorage.setItem("knots", seedData);
+
     updateContentPane();
     function generateOneBlock(width, offset, isGreen) {
         var color = "#27ae60";
@@ -53,7 +60,7 @@ $(document).ready(function() {
 	function constructKnotMember(partner, title, goal, enddate) {
 		var returnStr = "<article class='knotMember' data-blue='0', data-green='0' data-goal='"+ goal +"'>";
 		returnStr += "<h3>" + title + "<BR><small>with " + partner + "</small></h3>";
-        returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
+        //returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
 		//returnStr += "<div class='encourage'><span class='fa fa-child fa-3x encourageIcon'></span></div>"
         returnStr += "<section class='memberDetail'>";
         returnStr += "<p class='range-field'><input type='range' class='logSlider' min=0/><p>";
@@ -87,8 +94,6 @@ $(document).ready(function() {
         }else{
             $(knot).append(grayBlockAttrs.firstString);
         }
-
-
     }
 
     function updateSlider(knot) {
@@ -110,6 +115,15 @@ $(document).ready(function() {
 		var enddate = $("#enddateIn").val();
 		return constructKnotMember(partner,title,goal,enddate);
 	}
+    function addPlaceHolders(numKnots) {
+        var numPlaceholders = 5 - numKnots;
+        var placeholderString = "<div class='placeholder'><span class='addKnotText addKnot'>+ Add Knot</span></div>";
+    
+        for(var i = 1; i <= numPlaceholders; i++) {
+            $("#knots").append(placeholderString);
+        }
+        
+    }
 	function updateContentPane() {
 		var currentKnots = localStorage.getItem("knots");
 		$("#knots").html(currentKnots);
@@ -119,13 +133,19 @@ $(document).ready(function() {
             updateSlider(this);
             $(this).find(".memberDetail").slideUp();
         });
+        var numberOfKnots = $(".knotMember").length;
+        addPlaceHolders(numberOfKnots);
+
     }
-    $("#addKnotPane").on("click", ".addKnot",function(e){
+    $("#knots").on("click", ".addKnot",function(e){
+        $('#modal1').openModal();
+    });
+    $("#knots").on("click", ".addKnot",function(e){
     	//var formStr = "<section class='row' id='addForm'><h2>Add New Knot</h2><a id='hideAddPane' href='#'>hide</a><form class='col s12'><div class='row'> <div class='input-field col s6'> <input id='partnerIn' type='text'></input><label for='partnerIn'>Partner</label></div><div class='input-field col s6'> <input id='titleIn' type='text'></input><label for='titleIn'>Activity</label></div></div> <div class='input-field col s12'><input id='goalIn' type='text'></input><label for='goalIn'>Target Quantity</label> </div><div class='input-field col s12'><input id='enddateIn' type='date' class='datepicker'></input><label for='enddateIn'>End Date</label></div> <button id='addBtn'> add </button></form></section>";
         e.preventDefault();
         //$(this).closest("#addKnotPane").append(formStr);
         $("#addForm").slideDown();
-        $(this).remove();
+        // $(this).remove();
     });
     $("#addKnotPane").on("click", "#hideAddPane", function(e) {
     	var buttonStr = "<a href=''><button class='addKnot'> <i class='fa fa-plus-circle'></i> Add Knot</button></a>";
@@ -133,7 +153,7 @@ $(document).ready(function() {
     	$(this).closest("#addKnotPane").append(buttonStr);
     	$("#addForm").slideUp();
     });
-    $("#addKnotPane").on("click", "#addBtn", function(e) {
+    $("#contentPane").on("click", "#addBtn", function(e) {
     	e.preventDefault();
     	var newKnotString = getKnotString();
     	var allKnots = localStorage.getItem("knots");
@@ -142,7 +162,7 @@ $(document).ready(function() {
         var buttonStr = "<a href=''><button class='addKnot'> <i class='fa fa-plus-circle'></i> Add Knot</button></a>";
         e.preventDefault();
         $(this).closest("#addKnotPane").append(buttonStr);
-        $("#addForm").slideUp();
+        $('#modal1').closeModal();
     });
     $("#knots").on("click", ".encourageIcon", function(e) {
         alert("Sent encouragement!");
