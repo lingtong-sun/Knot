@@ -28,7 +28,11 @@ $(document).ready(function() {
         var color = "#95a5a6"
         var ret = "<div class='grayBlock' ";
         ret += " style= 'position: absolute; height: 100%; top: 0; background: " + color + "; width:" + width + "%; left:" + offset + "%'";
-        ret += "></div>";
+        ret += ">";
+        ret +="</div>";
+        ret += "<div class='yellowBlock' style='left:" + offset + "%'></div>"
+        ret += "<div class='redBlock'></div>"
+
         return{
             color: "#95a5a6",
             width: "" + width + "%",
@@ -92,12 +96,20 @@ $(document).ready(function() {
                 "width" : grayBlockAttrs.width + "%",
                 "left": grayBlockAttrs.offset
             });
-            
+            $(knot).children(".yellowBlock").css({
+                "left": grayBlockAttrs.offset,
+                "width": 0
+            });
+            $(knot).children(".yellowBlock").css({
+                "left": grayBlockAttrs.offset,
+                "width": 0
+            });
             if(isNew) {
                 $(knot).addClass("shouldAnimate");
                 //$(knot).data("green", (greenPercentage + Math.floor(Math.random() * 8 + 1)));
                 var knat = knot;
-                var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
+              //  var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
+                var newgreen = 10;
                 $(knat).attr("data-green", "" + parseFloat(newgreen) );
                 var newwidth = 100 - $(knat).attr("data-green")- $(knat).attr("data-blue");
                 $(knat).children(".grayBlock").attr(newwidth + "%");
@@ -132,8 +144,8 @@ $(document).ready(function() {
         var mine = $(this).closest(".knotMember").attr("data-blue") * max / 100.0;
         var partner = max - $(this).closest(".knotMember").attr("data-green") * max / 100.0;
      
-        console.log(mine);
-        console.log(partner);
+        // console.log(mine);
+        // console.log(partner);
 
         if (curr < mine) {
             $(this).val(parseInt(mine));
@@ -141,11 +153,27 @@ $(document).ready(function() {
             return false;
         }
 
-         if (curr > partner) {
+        if (curr > partner) {
             $(this).val(parseInt(partner));
             e.preventDefault();
             return false;
         }
+
+        var bluePercentage = $(this).closest(".knotMember").attr("data-blue") 
+        var greenPercentage = $(this).closest(".knotMember").attr("data-green") 
+        //var width = 100 - (bluePercentage + greenPercentage);
+
+        width = 1.0*(curr - mine)/max;
+    //    $(this).closest(".knotMember").find(".yellowBlock").offset({left:bluePercentage+"%"});
+        $(this).closest(".knotMember").find(".yellowBlock").width(width*100 +"%");
+        // var redWidth = width*100;
+        // if (curr > max/2) {
+            
+        // }
+
+        console.log(bluePercentage);
+        console.log(width);
+        console.log($(this).closest(".knotMember").find(".yellowBlock"));
          
     });
 

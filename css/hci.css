@@ -195,3 +195,18 @@ li.notificationSing:hover {
 .fa-child:hover {
 	color: #27ae60;
 }
+
+
+.yellowBlock {
+	background-color: yellow;
+	height: 100%;
+	position: absolute;
+	top:0;
+}
+
+.redBlock {
+	background-color: red;
+	height: 100%;
+	position: absolute;
+	top:0;
+}
