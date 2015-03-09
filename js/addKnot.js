@@ -100,7 +100,7 @@ $(document).ready(function() {
                 "left": grayBlockAttrs.offset,
                 "width": 0
             });
-            $(knot).children(".yellowBlock").css({
+            $(knot).children(".redBlock").css({
                 "left": grayBlockAttrs.offset,
                 "width": 0
             });
@@ -108,8 +108,7 @@ $(document).ready(function() {
                 $(knot).addClass("shouldAnimate");
                 //$(knot).data("green", (greenPercentage + Math.floor(Math.random() * 8 + 1)));
                 var knat = knot;
-              //  var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
-                var newgreen = 10;
+                var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
                 $(knat).attr("data-green", "" + parseFloat(newgreen) );
                 var newwidth = 100 - $(knat).attr("data-green")- $(knat).attr("data-blue");
                 $(knat).children(".grayBlock").attr(newwidth + "%");
@@ -166,11 +165,12 @@ $(document).ready(function() {
         width = 1.0*(curr - mine)/max;
     //    $(this).closest(".knotMember").find(".yellowBlock").offset({left:bluePercentage+"%"});
         $(this).closest(".knotMember").find(".yellowBlock").width(width*100 +"%");
-        // var redWidth = width*100;
-        // if (curr > max/2) {
-            
-        // }
-
+        var redWidth = width*100;
+        if (curr > max/2) {
+            curr = max/2 + (curr-max/2)*0.25;
+            width = 1.0*(curr-mine)/max;
+        }
+        $(this).closest(".knotMember").find(".redBlock").width(width*100 +"%");
         console.log(bluePercentage);
         console.log(width);
         console.log($(this).closest(".knotMember").find(".yellowBlock"));
@@ -243,6 +243,10 @@ $(document).ready(function() {
         var goal = knot.data('goal');
   //      var newVal = knot.find(".rangeVal").html();
         var newVal = knot.find(".logSlider").val();
+        //really ghetto shit over here, LT
+        if (newVal > goal/2) {
+            newVal = goal/2 + (newVal-goal/2)*0.25;
+        }
         console.log(newVal);
         var newAsPercent = Math.floor(newVal/goal * 100);
 
