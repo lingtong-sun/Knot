@@ -96,15 +96,14 @@ $(document).ready(function() {
             if(isNew) {
                 $(knot).addClass("shouldAnimate");
                 //$(knot).data("green", (greenPercentage + Math.floor(Math.random() * 8 + 1)));
-                setTimeout(function() {
-                    $(knot).attr("data-green", ""+(greenPercentage + Math.floor(Math.random() * 98 + 2) ) );
-                    
-                    $(knot).children(".grayBlock").animate({
-                        width: 100 - $(knot).attr("data-green")- $(knot).attr("data-blue") + "%"
-                    }, 3000, "linear", function() {
-                        $(knot).removeClass("shouldAnimate");
-                    });
-                }, 5000);
+                var knat = knot;
+                var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
+                $(knat).attr("data-green", "" + parseFloat(newgreen) );
+                var newwidth = 100 - $(knat).attr("data-green")- $(knat).attr("data-blue");
+                $(knat).children(".grayBlock").attr(newwidth + "%");
+                $(knat).children(".grayBlock").delay(500).stop().animate({
+                    width: newwidth + "%"
+                });
                 
             }
             
