@@ -18,9 +18,12 @@ header h1 {
 	margin: 0;
 	padding: 20px 0;
 }
-
+#modal1 {
+	height: 100%;
+}
 #addForm {
 	display: none;
+	text-align: center;
 }
 
 #addKnotPane {
@@ -74,11 +77,21 @@ button.addKnot {
 	height: 90px;
 	background: #ccc;
 	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-.addKnotText {
+h3#addHeaderText {
+	color: #ccc;
+}
+a.addKnotText {
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 1.6em;
 	color: white;
+}
+a.addKnotText:hover {
+	color: inherit;
+	text-decoration: none;
 }
 .knotMember h3 {
 	color: white;

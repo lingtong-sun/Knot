@@ -14,7 +14,7 @@ $(document).ready(function() {
 	// var orig = sessionStorage.getItem("knots");
  //    if(!orig) sessionStorage.setItem("knots", seedData);
 
-    updateContentPane();
+    updateContentPane(false);
     function generateOneBlock(width, offset, isGreen) {
         var color = "#27ae60";
         if(!isGreen) color = "#2980b9";
@@ -74,11 +74,12 @@ $(document).ready(function() {
 		return returnStr;
 	}
 
-    function createMiddleBlock(knot){
+    function createMiddleBlock(knot, isNew){
         $(knot).find('.middleBlocks').remove();
         var bluePercentage = $(knot).data("blue");
         var greenPercentage = $(knot).data("green");
-        var width = 100 - (bluePercentage + greenPercentage);
+        //var width = 100 - (bluePercentage + greenPercentage);
+        var width = 100 - bluePercentage-greenPercentage;
         width = width > 0? width: 0;
 
         var grayBlockAttrs = generateGrayBlock(width, bluePercentage );
@@ -88,10 +89,27 @@ $(document).ready(function() {
             console.log("there is a grayBlock")
             $(knot).children(".grayBlock").css({
                 "background-color": grayBlockAttrs.color,
-                "width" : grayBlockAttrs.width,
+                "width" : grayBlockAttrs.width + "%",
                 "left": grayBlockAttrs.offset
             });
-        }else{
+            
+            if(isNew) {
+                $(knot).addClass("shouldAnimate");
+                //$(knot).data("green", (greenPercentage + Math.floor(Math.random() * 8 + 1)));
+                setTimeout(function() {
+                    $(knot).attr("data-green", ""+(greenPercentage + Math.floor(Math.random() * 98 + 2) ) );
+                    
+                    $(knot).children(".grayBlock").animate({
+                        width: 100 - $(knot).attr("data-green")- $(knot).attr("data-blue") + "%"
+                    }, 3000, "linear", function() {
+                        $(knot).removeClass("shouldAnimate");
+                    });
+                }, 5000);
+                
+            }
+            
+        }
+        else{
             $(knot).append(grayBlockAttrs.firstString);
         }
     }
@@ -116,20 +134,21 @@ $(document).ready(function() {
 		return constructKnotMember(partner,title,goal,enddate);
 	}
     function addPlaceHolders(numKnots) {
-        var numPlaceholders = 5 - numKnots;
-        var placeholderString = "<div class='placeholder'><span class='addKnotText addKnot'>+ Add Knot</span></div>";
+        $(".placeholder").remove();
+        var numPlaceholders = 5 - numKnots - $('.placeholder').length;
+        var placeholderString = "<div class='placeholder'><a href='#' class='addKnotText addKnot'>+ Add Knot</a></div>";
     
         for(var i = 1; i <= numPlaceholders; i++) {
             $("#knots").append(placeholderString);
         }
         
     }
-	function updateContentPane() {
+	function updateContentPane(isNewLog) {
 		var currentKnots = localStorage.getItem("knots");
 		$("#knots").html(currentKnots);
 	    $(".knotMember").each(function() {
             // addBarsToKnot(this);
-            createMiddleBlock(this);
+            createMiddleBlock(this, isNewLog);
             updateSlider(this);
             $(this).find(".memberDetail").slideUp();
         });
@@ -158,7 +177,7 @@ $(document).ready(function() {
     	var newKnotString = getKnotString();
     	var allKnots = localStorage.getItem("knots");
     	localStorage.setItem("knots", newKnotString + allKnots);
-    	updateContentPane();
+    	updateContentPane(false);
         var buttonStr = "<a href=''><button class='addKnot'> <i class='fa fa-plus-circle'></i> Add Knot</button></a>";
         e.preventDefault();
         $(this).closest("#addKnotPane").append(buttonStr);
@@ -177,15 +196,15 @@ $(document).ready(function() {
         var bluePercentage = knot.data('blue');
         var greenPercentage = knot.data('green');
         $(knot).attr("data-blue", ""+(bluePercentage+newAsPercent));
-        $(knot).attr("data-green", ""+(greenPercentage + Math.floor(Math.random() * 8 + 1) ) );
+        //$(knot).data("blue", (bluePercentage+newAsPercent));
         updateSlider(knot);
         // addBarsToKnot(knot);
-        createMiddleBlock(knot);
+        createMiddleBlock(knot, true);
         var curAllKnots = $("#knots").html();
         console.log(curAllKnots);
         localStorage.setItem("knots", curAllKnots);
         $(this).closest(".knotMember").find(".memberDetail").slideUp();
-        updateContentPane();
+        updateContentPane(false);
     });
     $("#knots").on("click", ".knotMember", function(e) {
         e.preventDefault();
