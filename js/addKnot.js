@@ -141,7 +141,7 @@ $(document).ready(function() {
         var greyBar = $(knot).children(".grayBlock");
         //first illustrate user input
         $(knot).attr("data-blue", offset);
-        $(greyBar).css({"width" : width + "%"});
+        $(greyBar).css({"width" : width - offset + "%"});
         $(greyBar).animate({
             "left" : offset + "%"
             
@@ -149,7 +149,11 @@ $(document).ready(function() {
         //then illustrate "faked" animation
 
         var newgreen = oldGreen + Math.floor(Math.random() * 30 + 2);
-
+        if(offset - oldGreen <= -10){
+            setTimeout(function(){
+                toast(knot.data('partner') + ' is trying to motivate you!', 5000);
+            }, 1000);
+        }
         $(knot).attr("data-green", newgreen);
         $(greyBar).stop(true,true).delay(4000).animate({
             "width" : 100 - newgreen - offset + "%"
@@ -304,18 +308,14 @@ $(document).ready(function() {
 
         var bluePercentage = parseFloat(knot.attr('data-blue'));
         var greenPercentage = parseFloat(knot.attr('data-green'));
-        var motivation = knot.find(".motivation")
+        var motivation = knot.find(".motivation");
         console.log(newAsPercent-greenPercentage);
         if(newAsPercent-greenPercentage >= 10){
             motivation.css({"opacity":"1"});
         }else{
             motivation.css({"opacity":"0"});
         }
-        if(newAsPercent - greenPercentage <= -10){
-            setTimeout(function(){
-                toast(knot.data('partner') + ' is trying to motivate you!', 5000);
-            }, 2000);
-        }
+        
         $(knot).attr("data-blue", ""+(newAsPercent));
         bluePercentage = parseFloat(knot.attr('data-blue'));
 
