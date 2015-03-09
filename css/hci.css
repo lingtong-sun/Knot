@@ -32,6 +32,21 @@ header h1 {
 	margin-bottom: 20px;
 }
 
+.motivation{
+	color: white;
+	display: inline;
+	transition: all 0.5s ease;
+	font-size: 2em;
+	cursor: pointer;
+	opacity: 0;
+	float: right;
+	top: -50px;
+}
+
+.motivation:hover{
+	color: #2980b9;
+}
+
 button.addKnot {
 	width: 100%;
 	border: none;
