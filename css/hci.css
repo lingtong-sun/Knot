@@ -218,14 +218,14 @@ li.notificationSing:hover {
 
 
 .yellowBlock {
-	background-color: yellow;
+	background-color: #f1c40f;
 	height: 100%;
 	position: absolute;
 	top:0;
 }
 
 .redBlock {
-	background-color: red;
+	background-color: #3498db;
 	height: 100%;
 	position: absolute;
 	top:0;
