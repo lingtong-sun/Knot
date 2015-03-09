@@ -36,7 +36,11 @@ $(document).ready(function() {
         var color = "#95a5a6"
         var ret = "<div class='grayBlock' ";
         ret += " style= 'position: absolute; height: 100%; top: 0; background: " + color + "; width:" + width + "%; left:" + offset + "%'";
-        ret += "></div>";
+        ret += ">";
+        ret +="</div>";
+        ret += "<div class='yellowBlock' style='left:" + offset + "%'></div>"
+        ret += "<div class='redBlock'></div>"
+
         return{
             color: "#95a5a6",
             width: "" + width + "%",
@@ -86,6 +90,52 @@ $(document).ready(function() {
         var grayBlock = generateGrayBlock(100, 0);
         $(knot).append(grayBlock.firstString);
     }
+    // function createMiddleBlock(knot, isNew){
+    //     $(knot).find('.middleBlocks').remove();
+    //     var bluePercentage = $(knot).data("blue");
+    //     var greenPercentage = $(knot).data("green");
+    //     //var width = 100 - (bluePercentage + greenPercentage);
+    //     var width = 100 - bluePercentage-greenPercentage;
+    //     width = width > 0? width: 0;
+
+    //     var grayBlockAttrs = generateGrayBlock(width, bluePercentage );
+    //     // grayBlock = generateGrayBlock(15, bluePercentage );
+    //     console.log(grayBlockAttrs);
+    //     if ($(knot).children(".grayBlock").length){
+    //         console.log("there is a grayBlock")
+    //         $(knot).children(".grayBlock").css({
+    //             "background-color": grayBlockAttrs.color,
+    //             "width" : grayBlockAttrs.width + "%",
+    //             "left": grayBlockAttrs.offset
+    //         });
+    //         $(knot).children(".yellowBlock").css({
+    //             "left": grayBlockAttrs.offset,
+    //             "width": 0
+    //         });
+    //         $(knot).children(".redBlock").css({
+    //             "left": grayBlockAttrs.offset,
+    //             "width": 0
+    //         });
+    //         if(isNew) {
+    //             $(knot).addClass("shouldAnimate");
+    //             //$(knot).data("green", (greenPercentage + Math.floor(Math.random() * 8 + 1)));
+    //             var knat = knot;
+    //             var newgreen = parseFloat($(knat).attr("data-green")) + Math.floor(Math.random() * 98 + 2);
+    //             $(knat).attr("data-green", "" + parseFloat(newgreen) );
+    //             var newwidth = 100 - $(knat).attr("data-green")- $(knat).attr("data-blue");
+    //             $(knat).children(".grayBlock").attr(newwidth + "%");
+    //             $(knat).children(".grayBlock").delay(500).stop().animate({
+    //                 width: newwidth + "%"
+    //             });
+                
+    //         }
+            
+    //     }
+    //     else{
+    //         $(knot).append(grayBlockAttrs.firstString);
+    //     }
+
+    // }
     function adjustMiddleGrayBar(knot, width, offset, oldGreen) {
         var greyBar = $(knot).children(".grayBlock");
         //first illustrate user input
@@ -116,6 +166,47 @@ $(document).ready(function() {
         $(this).closest(".knotMember").find('.rangeVal').html(newVal);
         
     });
+
+    $("#knots").on("change input", ".logSlider", function(e) {
+        var curr = $(this).val();
+        var max = $(this).attr("max");
+        var mine = $(this).closest(".knotMember").attr("data-blue") * max / 100.0;
+        var partner = max - $(this).closest(".knotMember").attr("data-green") * max / 100.0;
+     
+        // console.log(mine);
+        // console.log(partner);
+
+        if (curr < mine) {
+            $(this).val(parseInt(mine));
+            e.preventDefault();
+            return false;
+        }
+
+        if (curr > partner) {
+            $(this).val(parseInt(partner));
+            e.preventDefault();
+            return false;
+        }
+
+        var bluePercentage = $(this).closest(".knotMember").attr("data-blue");
+        var greenPercentage = $(this).closest(".knotMember").attr("data-green");
+        //var width = 100 - (bluePercentage + greenPercentage);
+
+        width = 1.0*(curr - mine)/max;
+        //$(this).closest(".knotMember").find(".yellowBlock").offset({left:bluePercentage+"%"});
+        $(this).closest(".knotMember").find(".yellowBlock").width(width*100 +"%");
+        var redWidth = width*100;
+        if (curr > max/2) {
+            curr = max/2 + (curr-max/2)*0.25;
+            width = 1.0*(curr-mine)/max;
+        }
+        $(this).closest(".knotMember").find(".redBlock").width(width*100 +"%");
+        console.log(bluePercentage);
+        console.log(width);
+        console.log($(this).closest(".knotMember").find(".yellowBlock"));
+         
+    });
+
 	function getKnotString() {
 		var partner = $("#partnerIn").val();
 		var title = $("#titleIn").val();
@@ -199,13 +290,20 @@ $(document).ready(function() {
         e.stopPropagation();
         var knot = $(this).closest(".knotMember");
         var goal = knot.data('goal');
-        var newVal = knot.find(".rangeVal").html();
+  //      var newVal = knot.find(".rangeVal").html();
+        var newVal = knot.find(".logSlider").val();
+        //really ghetto shit over here, LT
+        if (newVal > goal/2) {
+            newVal = goal/2 + (newVal-goal/2)*0.25;
+        }
+        console.log(newVal);
         var newAsPercent = Math.floor(newVal/goal * 100);
 
         var bluePercentage = parseFloat(knot.attr('data-blue'));
         var greenPercentage = parseFloat(knot.attr('data-green'));
         $(knot).attr("data-blue", ""+(bluePercentage+newAsPercent));
         bluePercentage = parseFloat(knot.attr('data-blue'));
+
         //$(knot).data("blue", (bluePercentage+newAsPercent));
         updateSlider(knot);
         // addBarsToKnot(knot);
@@ -216,6 +314,8 @@ $(document).ready(function() {
         //updateContentPane(false);
     });
     $("#knots").on("click", ".knotMember", function(e) {
+        var v = $(this).attr("data-blue");
+        $(this).find(".logSlider").val(v);
         e.preventDefault();
             $(this).find(".memberDetail").slideDown();
 
