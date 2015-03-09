@@ -70,7 +70,7 @@ $(document).ready(function() {
         }
     }
 	function constructKnotMember(partner, title, goal, enddate) {
-		var returnStr = "<article class='knotMember' data-blue='0', data-green='0' data-goal='"+ goal +"'>";
+		var returnStr = "<article class='knotMember' data-blue='0', data-green='0' data-goal='"+ goal +"' data-partner='"+partner+"'>";
 		returnStr += "<h3>" + title + "<i class='fa fa-bullhorn motivation'></i><BR><small>with " + partner + "</small></h3>";
         // returnStr += "<i class='fa fa-bullhorn fa-4x motivation'></i>"
         //returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
@@ -310,6 +310,11 @@ $(document).ready(function() {
             motivation.css({"opacity":"1"});
         }else{
             motivation.css({"opacity":"0"});
+        }
+        if(newAsPercent - greenPercentage <= -10){
+            setTimeout(function(){
+                toast(knot.data('partner') + ' is trying to motivate you!', 5000);
+            }, 2000);
         }
         $(knot).attr("data-blue", ""+(newAsPercent));
         bluePercentage = parseFloat(knot.attr('data-blue'));
