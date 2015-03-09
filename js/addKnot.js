@@ -125,6 +125,30 @@ $(document).ready(function() {
         $(this).closest(".knotMember").find('.rangeVal').html(newVal);
         
     });
+
+    $("#knots").on("change input", ".logSlider", function(e) {
+        var curr = $(this).val();
+        var max = $(this).attr("max");
+        var mine = $(this).closest(".knotMember").attr("data-blue") * max / 100.0;
+        var partner = max - $(this).closest(".knotMember").attr("data-green") * max / 100.0;
+     
+        console.log(mine);
+        console.log(partner);
+
+        if (curr < mine) {
+            $(this).val(parseInt(mine));
+            e.preventDefault();
+            return false;
+        }
+
+         if (curr > partner) {
+            $(this).val(parseInt(partner));
+            e.preventDefault();
+            return false;
+        }
+         
+    });
+
 	function getKnotString() {
 		var partner = $("#partnerIn").val();
 		var title = $("#titleIn").val();
@@ -189,12 +213,14 @@ $(document).ready(function() {
         e.stopPropagation();
         var knot = $(this).closest(".knotMember");
         var goal = knot.data('goal');
-        var newVal = knot.find(".rangeVal").html();
+  //      var newVal = knot.find(".rangeVal").html();
+        var newVal = knot.find(".logSlider").val();
+        console.log(newVal);
         var newAsPercent = Math.floor(newVal/goal * 100);
 
         var bluePercentage = knot.data('blue');
         var greenPercentage = knot.data('green');
-        $(knot).attr("data-blue", ""+(bluePercentage+newAsPercent));
+        $(knot).attr("data-blue", ""+(newAsPercent));
         //$(knot).data("blue", (bluePercentage+newAsPercent));
         updateSlider(knot);
         // addBarsToKnot(knot);
@@ -206,6 +232,8 @@ $(document).ready(function() {
         updateContentPane(false);
     });
     $("#knots").on("click", ".knotMember", function(e) {
+        var v = $(this).attr("data-blue");
+        $(this).find(".logSlider").val(v);
         e.preventDefault();
             $(this).find(".memberDetail").slideDown();
 
