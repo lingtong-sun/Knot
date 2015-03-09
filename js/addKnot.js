@@ -193,18 +193,18 @@ $(document).ready(function() {
         //var width = 100 - (bluePercentage + greenPercentage);
 
         width = 1.0*(curr - mine)/max;
-        //$(this).closest(".knotMember").find(".yellowBlock").offset({left:bluePercentage+"%"});
+        $(this).closest(".knotMember").find(".yellowBlock").css({"left":bluePercentage+"%"});
         $(this).closest(".knotMember").find(".yellowBlock").width(width*100 +"%");
         var redWidth = width*100;
         if (curr > max/2) {
             curr = max/2 + (curr-max/2)*0.25;
             width = 1.0*(curr-mine)/max;
         }
+        $(this).closest(".knotMember").find(".redBlock").css({"left":bluePercentage+"%"});
         $(this).closest(".knotMember").find(".redBlock").width(width*100 +"%");
         console.log(bluePercentage);
         console.log(width);
-        console.log($(this).closest(".knotMember").find(".yellowBlock"));
-         
+       
     });
 
 	function getKnotString() {
@@ -301,14 +301,17 @@ $(document).ready(function() {
 
         var bluePercentage = parseFloat(knot.attr('data-blue'));
         var greenPercentage = parseFloat(knot.attr('data-green'));
-        $(knot).attr("data-blue", ""+(bluePercentage+newAsPercent));
+        $(knot).attr("data-blue", ""+(newAsPercent));
         bluePercentage = parseFloat(knot.attr('data-blue'));
 
         //$(knot).data("blue", (bluePercentage+newAsPercent));
         updateSlider(knot);
         // addBarsToKnot(knot);
         
-        adjustMiddleGrayBar(knot, 100-bluePercentage-greenPercentage,bluePercentage, greenPercentage);
+        adjustMiddleGrayBar(knot, 100-greenPercentage,newAsPercent, greenPercentage);
+          $(this).closest(".knotMember").find(".yellowBlock").width(0);
+         $(this).closest(".knotMember").find(".redBlock").width(0);
+       
         backup();
         $(this).closest(".knotMember").find(".memberDetail").slideUp();
         //updateContentPane(false);
