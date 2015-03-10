@@ -22,7 +22,6 @@ header h1 {
 	height: 100%;
 }
 #addForm {
-	display: none;
 	text-align: center;
 }
 
@@ -33,14 +32,15 @@ header h1 {
 }
 
 .motivation{
-	color: white;
+	color: rgba(255,255,255,0.3);
 	display: inline;
 	transition: all 0.5s ease;
 	font-size: 2em;
 	cursor: pointer;
 	opacity: 0;
-	float: right;
-	top: -50px;
+	position: absolute;
+	top: 5%;
+	right: 50%;
 }
 
 .motivation:hover{
@@ -60,6 +60,19 @@ button.addKnot {
 	padding: 20px 0;
 	margin-bottom: 20px;
 }
+.modal.modal-fixed-footer .modal-content {
+  position: fixed;
+  height: 100%;
+  padding-bottom: 64px;
+  width: 100%;
+  overflow-y: auto;
+}
+.modal {
+	max-height: none;
+}
+#modal1 {
+	top: 0 !important;
+}
 #addKnotPane #hideAddPane {
 	position: absolute; 
 	right: 0;
@@ -67,7 +80,7 @@ button.addKnot {
 }
 
 .knotMember {
-	padding: 8px 10px;
+	padding: 25px 10px;
 	background: -webkit-linear-gradient(
 		to right,
 		#2980b9, #27ae60
@@ -95,6 +108,9 @@ button.addKnot {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.placeholder:hover {
+	cursor: pointer;
 }
 h3#addHeaderText {
 	color: #ccc;
@@ -215,7 +231,19 @@ li.notificationSing:hover {
 .fa-child:hover {
 	color: #27ae60;
 }
-
+h3.yName {
+  position: absolute;
+  top: 20%;
+  font-size: 5em;
+  color: rgba(255, 255, 255, 0.498039);
+}
+h3.pName {
+  position: absolute;
+  top: 20%;
+  right: 1%;
+  font-size: 5em;
+  color: rgba(255, 255, 255, 0.498039);
+}
 
 .yellowBlock {
 	background-color: yellow;
@@ -229,4 +257,15 @@ li.notificationSing:hover {
 	height: 100%;
 	position: absolute;
 	top:0;
+}
+.completed {
+  background: goldenrod;
+  content: 'Knot completed!';
+}
+h3.completedTxt {
+  color: rgba(255,255,255,0.5);
+}
+h3.aTitle {
+	font-size: 3.5em;
+	text-align: center;
 }
