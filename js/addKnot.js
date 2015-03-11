@@ -371,7 +371,9 @@ $(document).ready(function() {
     $("#knots").on("click", ".motivation", function(e) {
         e.stopPropagation();
         $(this).find(".memberDetail").slideUp();
-        alert("Motivation Sent!");
+        // alert("Motivation Sent!");
+        $('#modal2').openModal();
+
     });
     $("#knots").on("click", ".logConfirm", function(e) {
         e.stopPropagation();
@@ -391,13 +393,12 @@ $(document).ready(function() {
         var motivation = knot.find(".motivation");
         console.log(newAsPercent-greenPercentage);
         if(newAsPercent-greenPercentage >= 10){
-          //   motivation.css({"opacity":"1"});
+             motivation.css({"display":"inline"});
         //     motivation.css({"cursor": "pointer"});
          //   addMotivation(knot);
         }else{
-            // motivation.css({"opacity":"0"});
-
-          //   motivation.css({"cursor": "default"});
+             motivation.css({"display":"none"});
+      //       motivation.css({"cursor": ""});
           //  removeMotivation(knot);
         }
         
