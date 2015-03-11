@@ -164,6 +164,12 @@ $(document).ready(function() {
     //     }
 
     // }
+
+    function partnerAdded(knot) {
+        removeMotivation(knot);
+        checkIfCompleted(knot);
+    }
+
     function checkIfCompleted(knot) {
         if(parseFloat($(knot).attr("data-blue")) + parseFloat($(knot).attr("data-green")) >= 100) {
             $(knot).remove().insertAfter($("#knots .bar:last")).addClass('completed');
@@ -187,7 +193,7 @@ $(document).ready(function() {
         },1000);
         //then illustrate "faked" animation
 
-        
+        addMotivation(knot);
         var newgreen = oldGreen + Math.floor(Math.random() * 30 + 2);
         if(offset - newgreen <= 0 ) {
             removeMotivation(knot);
@@ -200,7 +206,7 @@ $(document).ready(function() {
         $(knot).attr("data-green", newgreen);
         $(greyBar).stop(true,true).delay(4000).animate({
             "width" : 100 - newgreen - offset + "%"
-        },1000, function(){ checkIfCompleted(knot) });
+        },1000, function(){ partnerAdded(knot) });
     }
     function updateSlider(knot) {
         var sum = parseFloat($(knot).attr("data-blue")) + parseFloat($(knot).attr("data-green"));
@@ -386,10 +392,10 @@ $(document).ready(function() {
         console.log(newAsPercent-greenPercentage);
         if(newAsPercent-greenPercentage >= 10){
             // motivation.css({"opacity":"1"});
-            addMotivation(knot);
+         //   addMotivation(knot);
         }else{
             // motivation.css({"opacity":"0"});
-            removeMotivation(knot);
+          //  removeMotivation(knot);
         }
         
         $(knot).attr("data-blue", ""+(newAsPercent));
