@@ -5,6 +5,7 @@ $(document).ready(function() {
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15 // Creates a dropdown of 15 years to control year
     });
+
     $('.modal-trigger').leanModal();
     //var seedData = '<article class="knotMember" data-knots="[13,20,6]" data-goal="15"><h3>Read for fun<br><small>with Mike</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="9"><div class="rangeVal">1</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:13%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:20%; left:13%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:6%; left:33%"></div></article><article class="knotMember" data-knots="[20,40]" data-goal="5"><h3>Swim<br><small>with Wending</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="2"><div class="rangeVal">2</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:40%; left:20%"></div></article><article class="knotMember" data-knots="[15,30,15,5,20]" data-goal="20"><h3>Morning Run<br><small>with John</small></h3><span class="days">33 days left</span><section class="memberDetail" style="display: block;"><input type="range" class="logSlider" min="0/" max="3"><div class="rangeVal">4</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:30%; left:15%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:45%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:5%; left:60%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:65%"></div></article>';
 	var orig = localStorage.getItem("knots");
@@ -13,7 +14,7 @@ $(document).ready(function() {
  //    var seedData= '<article class="knotMember" data-knots="[13,20,6]" data-goal="15"><h3>Read for fun<br><small>with Mike</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="9"><div class="rangeVal">1</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:13%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:20%; left:13%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:6%; left:33%"></div></article><article class="knotMember" data-knots="[20,40]" data-goal="5"><h3>Swim<br><small>with Wending</small></h3><span class="days">47 days left</span><section class="memberDetail" style="display: none;"><input type="range" class="logSlider" min="0/" max="2"><div class="rangeVal">2</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:40%; left:20%"></div></article><article class="knotMember" data-knots="[15,30,15,5,20]" data-goal="20"><h3>Morning Run<br><small>with John</small></h3><span class="days">33 days left</span><section class="memberDetail" style="display: block;"><input type="range" class="logSlider" min="0/" max="3"><div class="rangeVal">4</div> <button class="logConfirm">ok</button></section><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:0%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:30%; left:15%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:15%; left:45%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#27ae60; width:5%; left:60%"></div><div class="colorBlocks" style="position:absolute; height:100%; top: 0; background:#2980b9; width:20%; left:65%"></div></article>';
 	// var orig = sessionStorage.getItem("knots");
  //    if(!orig) sessionStorage.setItem("knots", seedData);
-
+    $('.tooltipped').tooltip({delay: 50});
     initBoard();
     function generateOneBlock(width, offset, isGreen) {
         var color = "#27ae60";
@@ -50,6 +51,25 @@ $(document).ready(function() {
         };
         // return ret;
     }
+    function addMotivation(knot) {
+        var name = $(knot).children(".pName");
+        $(name).addClass("needsMotivation");
+        $(name).addClass("tooltipped");
+        $(name).addClass("animated").addClass("infinite").addClass("pulse");
+        $(name).attr("data-position", "bottom");
+        $(name).attr("data-delay", "50");
+        $(name).attr("data-tooltip", "Click to motivate!");
+        $('.tooltipped').tooltip({delay: 50});
+    }
+    function removeMotivation(knot) {
+        var name = $(knot).children(".pName");
+        $(name).removeClass("needsMotivation");
+        $(name).removeClass("tooltipped");
+        $(name).removeClass("animated").removeClass("infinite").removeClass("pulse");
+        $(name).attr("data-position", "");
+        $(name).attr("data-delay", "");
+        $(name).attr("data-tooltip", "");
+    }
 
     function daysLeft(enddate) {
         var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
@@ -70,17 +90,21 @@ $(document).ready(function() {
             offset += curPercent;
         }
     }
+    function updateSliderValue(knot) {
+        var logVal = $(knot).children(".memberDetail").children("p").children(".logSlider").val();
+        $(knot).children(".memberDetail").children("p").children(".rangeValue").val(logVal) ;
+    }
 	function constructKnotMember(partner, title, goal, enddate) {
 		var returnStr = "<article class='knotMember bar' data-blue='0', data-green='0' data-goal='"+ goal +"' data-partner='"+partner+ "' data-activity='" + title + "'>";
 		returnStr += "<h3 class='aTitle'>" + title + "<i class='fa fa-bullhorn motivation'></i><BR></h3>";
         returnStr += "<h3 class='yName'>YOU</h3>" ;
-        returnStr += "<h3 class='pName'>"+partner+"</h3>" ;
+        returnStr += "<a href='#modal2' class='pName'>"+partner+"</a>" ;
         // returnStr += "<i class='fa fa-bullhorn fa-4x motivation'></i>"
         //returnStr += "<span class='days'>" + daysLeft(enddate) + " days left</span>";
 		//returnStr += "<div class='encourage'><span class='fa fa-child fa-3x encourageIcon'></span></div>"
         returnStr += "<section class='memberDetail'>";
         returnStr += "<p class='range-field'><input type='range' class='logSlider' min=0/><p>";
-        returnStr += "<div class='rangeVal'>0</div>";
+        returnStr += "<input type='text' class='rangeValue' />";
         returnStr += " <button class='logConfirm waves-effect waves-light btn'>ok</button>"
         returnStr += "</section>";
         // returnStr += "<div class='test'></div>";
@@ -163,7 +187,11 @@ $(document).ready(function() {
         },1000);
         //then illustrate "faked" animation
 
+        
         var newgreen = oldGreen + Math.floor(Math.random() * 30 + 2);
+        if(offset - newgreen <= 0 ) {
+            removeMotivation(knot);
+        }
         if(offset - oldGreen <= -10){
             setTimeout(function(){
                 toast(knot.data('partner') + ' is trying to motivate you!', 5000);
@@ -185,13 +213,19 @@ $(document).ready(function() {
         $(this).closest(".knotMember").find('.rangeVal').html(newVal);
         
     });
-
+    $("#knots").on("change input", ".memberDetail p .rangeValue", function(e) {
+        var knot = $(this).closest(".knotMember");
+        var logVal = $(knot).children(".memberDetail").children("p").children(".rangeValue").val();
+        $(knot).children(".memberDetail").children("p").children(".logSlider").val(logVal);
+        $(knot).children(".memberDetail").children("p").children(".logSlider").trigger("change");
+    });
     $("#knots").on("change input", ".logSlider", function(e) {
         var curr = $(this).val();
         var max = $(this).attr("max");
+        var knot = $(this).closest(".knotMember");
         var mine = $(this).closest(".knotMember").attr("data-blue") * max / 100.0;
         var partner = max - $(this).closest(".knotMember").attr("data-green") * max / 100.0;
-     
+        
         // console.log(mine);
         // console.log(partner);
 
@@ -223,7 +257,7 @@ $(document).ready(function() {
         $(this).closest(".knotMember").find(".redBlock").width(width*100 +"%");
         console.log(bluePercentage);
         console.log(width);
-       
+        updateSliderValue(knot);
     });
 
 	function getKnotString() {
@@ -264,6 +298,7 @@ $(document).ready(function() {
         var numberOfKnots = $(".knotMember").length;
         if(currentKnots == "") addPlaceHolders(numberOfKnots);
         if(currentKnots) restore();
+        $('.tooltipped').tooltip({delay: 50});
     }
 	function updateContentPane(isNewLog) {
 		var currentKnots = localStorage.getItem("knots");
@@ -283,6 +318,12 @@ $(document).ready(function() {
     });
     $("#knots").on("click",".placeholder",function(e){
         $('#modal1').openModal();
+    });
+    $("#knots").on("click",".needsMotivation",function(e){
+        $('#modal2').openModal();
+    });
+    $("#modal2").on("click",".senderBtn",function(e){
+        toast("Message successfully sent!",3000);
     });
     $("#knots").on("click", ".addKnot",function(e){
     	//var formStr = "<section class='row' id='addForm'><h2>Add New Knot</h2><a id='hideAddPane' href='#'>hide</a><form class='col s12'><div class='row'> <div class='input-field col s6'> <input id='partnerIn' type='text'></input><label for='partnerIn'>Partner</label></div><div class='input-field col s6'> <input id='titleIn' type='text'></input><label for='titleIn'>Activity</label></div></div> <div class='input-field col s12'><input id='goalIn' type='text'></input><label for='goalIn'>Target Quantity</label> </div><div class='input-field col s12'><input id='enddateIn' type='date' class='datepicker'></input><label for='enddateIn'>End Date</label></div> <button id='addBtn'> add </button></form></section>";
@@ -344,9 +385,11 @@ $(document).ready(function() {
         var motivation = knot.find(".motivation");
         console.log(newAsPercent-greenPercentage);
         if(newAsPercent-greenPercentage >= 10){
-            motivation.css({"opacity":"1"});
+            // motivation.css({"opacity":"1"});
+            addMotivation(knot);
         }else{
-            motivation.css({"opacity":"0"});
+            // motivation.css({"opacity":"0"});
+            removeMotivation(knot);
         }
         
         $(knot).attr("data-blue", ""+(newAsPercent));
