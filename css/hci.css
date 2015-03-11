@@ -35,13 +35,13 @@ header h1 {
 .motivation{
 	color: rgba(255,255,255,0.3);
 	display: inline;
+	height: 100%;
 	transition: all 0.5s ease;
 	font-size: 2em;
 	cursor: pointer;
 	opacity: 0;
 	position: absolute;
-	top: 5%;
-	right: 50%;
+	left: 60%;
 }
 
 .motivation:hover{
@@ -288,6 +288,7 @@ a.pName {
   font-size: 5em;
   color: rgba(255, 255, 255, 0.498039);
   z-index: 22;
+   pointer-events: none;
 }
 a.pName:hover {
 	text-decoration: none;

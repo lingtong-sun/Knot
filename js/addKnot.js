@@ -58,7 +58,7 @@ $(document).ready(function() {
         $(name).addClass("animated").addClass("infinite").addClass("pulse");
         $(name).attr("data-position", "bottom");
         $(name).attr("data-delay", "50");
-        $(name).attr("data-tooltip", "Click to motivate!");
+        // $(name).attr("data-tooltip", "Click to motivate!");
         $('.tooltipped').tooltip({delay: 50});
     }
     function removeMotivation(knot) {
@@ -68,7 +68,7 @@ $(document).ready(function() {
         $(name).removeClass("animated").removeClass("infinite").removeClass("pulse");
         $(name).attr("data-position", "");
         $(name).attr("data-delay", "");
-        $(name).attr("data-tooltip", "");
+        // $(name).attr("data-tooltip", "");
     }
 
     function daysLeft(enddate) {
@@ -196,7 +196,7 @@ $(document).ready(function() {
         addMotivation(knot);
         var newgreen = oldGreen + Math.floor(Math.random() * 30 + 2);
         if(offset - newgreen <= 0 ) {
-            removeMotivation(knot);
+         //   removeMotivation(knot);
         }
         if(offset - oldGreen <= -10){
             setTimeout(function(){
@@ -391,10 +391,13 @@ $(document).ready(function() {
         var motivation = knot.find(".motivation");
         console.log(newAsPercent-greenPercentage);
         if(newAsPercent-greenPercentage >= 10){
-            // motivation.css({"opacity":"1"});
+          //   motivation.css({"opacity":"1"});
+        //     motivation.css({"cursor": "pointer"});
          //   addMotivation(knot);
         }else{
             // motivation.css({"opacity":"0"});
+
+          //   motivation.css({"cursor": "default"});
           //  removeMotivation(knot);
         }
         
