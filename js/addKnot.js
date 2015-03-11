@@ -373,7 +373,6 @@ $(document).ready(function() {
         $(this).find(".memberDetail").slideUp();
         // alert("Motivation Sent!");
         $('#modal2').openModal();
-
     });
     $("#knots").on("click", ".logConfirm", function(e) {
         e.stopPropagation();
@@ -421,9 +420,20 @@ $(document).ready(function() {
         var v = $(this).attr("data-blue");
         $(this).find(".logSlider").val(v);
         e.preventDefault();
-            $(this).find(".memberDetail").slideDown();
+        // $(this).find(".memberDetail").slideDown();
 
     });
+
+    $("#knots").on("mouseenter", ".knotMember", function(e) {
+        $(this).find(".memberDetail").slideDown();
+
+    });
+    $("#knots").on("mouseleave", ".knotMember", function(e) {
+        $(this).find(".memberDetail").slideUp();
+
+    });
+
+
     $("#notifs").on("click", function(e) {
         $("#notifCenter").slideToggle();
     });
