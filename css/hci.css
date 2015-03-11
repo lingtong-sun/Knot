@@ -21,6 +21,7 @@ header h1 {
 #modal1 {
 	height: 100%;
 }
+
 #addForm {
 	text-align: center;
 }
@@ -60,15 +61,58 @@ button.addKnot {
 	padding: 20px 0;
 	margin-bottom: 20px;
 }
-.modal.modal-fixed-footer .modal-content {
+#modal1.modal.modal-fixed-footer .modal-content {
   position: fixed;
   height: 100%;
   padding-bottom: 64px;
   width: 100%;
   overflow-y: auto;
 }
-.modal {
-	max-height: none;
+#modal1.modal {
+	max-height: 50%;
+}
+#modal2.modal .modal-footer {
+	padding: 16px;
+	height: 100%;
+	
+
+}
+#modal2.modal .modal-content {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	border-radius: 0;
+	  background: rgba(0,0,0,0.5);
+  	color: white;
+  	padding: 40px;
+}
+#modal2 textarea {
+	padding: 10px;
+	font-size: 1.3em;
+	height: 80px;
+}
+#modal2 a.modal-action.modal-close {
+  margin: auto;
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #4caf50;
+  padding: 10px;
+  font-size: 2em;
+  color: white;
+  text-decoration: none;
+  transition: background 0.5s ease-in;
+  -webkit-transition: background 0.5s ease-in;
+  -moz-transition: background 0.5s ease-in;
+}
+.senderBtn:hover {
+	background: #81c784 !important;
+}
+#modal2.modal {
+	max-height: 38%;
+	top: 0 !important;
+	background-color: none !important;
+	background: none;
 }
 #modal1 {
 	top: 0 !important;
@@ -237,21 +281,33 @@ h3.yName {
   font-size: 5em;
   color: rgba(255, 255, 255, 0.498039);
 }
-h3.pName {
+a.pName {
   position: absolute;
-  top: 20%;
+  top: 1%;
   right: 1%;
   font-size: 5em;
   color: rgba(255, 255, 255, 0.498039);
+  z-index: 22;
 }
-
+a.pName:hover {
+	text-decoration: none;
+}
 .yellowBlock {
 	background-color: #f1c40f;
 	height: 100%;
 	position: absolute;
 	top:0;
 }
-
+.needsMotivation {
+	color: #f44336 !important;
+	transition: all 0.5s ease-in;
+	-webkit-transition: all 0.5s ease-in;
+	-moz-transition: all 0.5s ease-in;
+}
+.needsMotivation:hover {
+	color: #e57373 !important;
+	cursor: pointer;
+}
 .redBlock {
 	background-color: #3498db;
 	height: 100%;
@@ -261,6 +317,13 @@ h3.pName {
 .completed {
   background: goldenrod;
   content: 'Knot completed!';
+}
+input.rangeValue {
+  display: block;
+  width: 100px;
+  color: white;
+  font-size: 2.2em;
+  text-align: center;
 }
 h3.completedTxt {
   color: rgba(255,255,255,0.5);
