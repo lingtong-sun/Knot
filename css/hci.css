@@ -320,12 +320,19 @@ a.pName:hover {
   background: goldenrod;
   content: 'Knot completed!';
 }
+.add, .minus {
+	color: white;
+	cursor: pointer;
+}
 input.rangeValue {
-  display: block;
+  display: inline;
   width: 100px;
   color: white;
   font-size: 2.2em;
   text-align: center;
+}
+.logSlider {
+	opacity: 0;
 }
 h3.completedTxt {
   color: rgba(255,255,255,0.5);
