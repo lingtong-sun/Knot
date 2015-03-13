@@ -189,6 +189,7 @@ a.addKnotText:hover {
 	display: none;
 	z-index: 3;
 	position: relative;
+	text-align: center;
 }
 .done {
 	content: "Done";
@@ -319,6 +320,15 @@ a.pName:hover {
 .completed {
   background: goldenrod;
   content: 'Knot completed!';
+}
+#reset {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: block;
+	opacity: 0;
 }
 .add, .minus {
 	color: white;
