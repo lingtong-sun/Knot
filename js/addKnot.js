@@ -94,6 +94,25 @@ $(document).ready(function() {
         var logVal = $(knot).children(".memberDetail").children("p").children(".logSlider").val();
         $(knot).children(".memberDetail").children("p").children(".rangeValue").val(logVal) ;
     }
+    function updateRecentPartnerBar(knot, pDelta) {
+        $(knot).children(".lastPartnerBar").remove();
+        var max = $(knot).find(".logSlider").attr("max");
+        var partnerBar = $("<div class='lastPartnerBar'></div>");
+        var greenPerc = parseFloat($(knot).attr("data-green"));
+        var leftT = 100 - greenPerc;
+        var widthW = 100*(pDelta/max);
+        $(knot).append(partnerBar);
+        $(partnerBar).css({
+            height: '100%', 
+            position:"absolute", 
+            top: "0", 
+            left: leftT + "%", 
+            width: widthW + "%", 
+            background: "rgba(255,255,255,0.3)"
+        });
+
+    }
+
 	function constructKnotMember(partner, title, goal, enddate) {
 		var returnStr = "<article class='knotMember bar' data-blue='0', data-green='0' data-goal='"+ goal +"' data-partner='"+partner+ "' data-activity='" + title + "'>";
 		returnStr += "<h3 class='aTitle'>" + title + "<i class='fa fa-bullhorn motivation'></i><BR></h3>";
@@ -107,7 +126,7 @@ $(document).ready(function() {
         returnStr += "<i class='medium mdi-content-remove-circle minus'></i>";
         
         returnStr += "<input value='0' type='text' class='rangeValue' />";
-        returnStr += "<i class='medium mdi-content-add-circle add'></i>";
+        returnStr += "<i class='medium mdi-content-add-circle add'></i><BR>";
         returnStr += " <button class='logConfirm waves-effect waves-light btn'>ok</button>"
         returnStr += "</section>";
         // returnStr += "<div class='test'></div>";
@@ -168,8 +187,9 @@ $(document).ready(function() {
 
     // }
 
-    function partnerAdded(knot) {
+    function partnerAdded(knot, delt) {
         removeMotivation(knot);
+        updateRecentPartnerBar(knot, delt);
         checkIfCompleted(knot);
     }
 
@@ -195,9 +215,11 @@ $(document).ready(function() {
             
         },1000);
         //then illustrate "faked" animation
-
+        var left = 100 - parseFloat($(knot).attr("data-blue")) -parseFloat($(knot).attr("data-green"));
         addMotivation(knot);
-        var newgreen = oldGreen + Math.floor(Math.random() * 30 + 2);
+        var max = $(knot).find(".logSlider").attr("max");
+        var delt = Math.floor((Math.random() * left + 1)/2);
+        var newgreen = oldGreen + Math.floor(100*(delt/max));
         if(offset - newgreen <= 0 ) {
          //   removeMotivation(knot);
         }
@@ -209,7 +231,8 @@ $(document).ready(function() {
         $(knot).attr("data-green", newgreen);
         $(greyBar).stop(true,true).delay(4000).animate({
             "width" : 100 - newgreen - offset + "%"
-        },1000, function(){ partnerAdded(knot) });
+        },1000, function(){ partnerAdded(knot, delt) });
+        
     }
     function updateSlider(knot) {
         var sum = parseFloat($(knot).attr("data-blue")) + parseFloat($(knot).attr("data-green"));
@@ -221,6 +244,10 @@ $(document).ready(function() {
         //var newVal = $(this).val();
         //$(this).closest(".knotMember").find('.rangeVal').html(newVal);
         
+    });
+    $("#reset").on("click", function(e) {
+        localStorage.setItem("knots","");
+        location.reload();
     });
     $("#knots").on("change input", ".memberDetail p .rangeValue", function(e) {
         var knot = $(this).closest(".knotMember");
@@ -243,7 +270,7 @@ $(document).ready(function() {
         }
         var max = $(knot).find(".logSlider").attr("max"); 
         
-        if(newAsPerc > 100-green) {
+        if(newAddAsPerc > 100-green) {
             $(knot).children(".memberDetail").children("p").children(".logSlider").val(blue);
             $(knot).children(".memberDetail").children("p").children(".logSlider").trigger("change");
         }
