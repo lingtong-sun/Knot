@@ -218,7 +218,7 @@ $(document).ready(function() {
         var left = 100 - parseFloat($(knot).attr("data-blue")) -parseFloat($(knot).attr("data-green"));
         addMotivation(knot);
         var max = $(knot).find(".logSlider").attr("max");
-        var delt = (Math.random() * left + 1);
+        var delt = (Math.random() * left + 10);
         var newgreen = oldGreen + Math.floor(100*(delt/max));
         if(offset - newgreen <= 0 ) {
          //   removeMotivation(knot);
